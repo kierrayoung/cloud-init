@@ -21,3 +21,6 @@ User metadata is specified on instance creation, and is accessible via the follo
     -H "Authorization: Bearer $instance_identity_token"    
     | jq -r
 
+
+Configuration Settings
+The following configuration can be changed for 
