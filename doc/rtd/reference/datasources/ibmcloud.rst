@@ -3,29 +3,22 @@
 IBM Cloud
 *********
 
-The datasource AltCloud will be used to pick up user data on `RHEVm`_ and
-`vSphere`_.
+Metadata is accessible via the following URL:
 
-RHEVm
-=====
+.. code-block:: sh
+    curl -X GET "http://169.254.169.254/metadata/v1/instance?version=2022-03-01"    
+    -H "Accept: application/json"    
+    -H "Authorization: Bearer $instance_identity_token"    
+    | jq -r
 
-For `RHEVm`_ v3.0 the user data is injected into the VM using floppy
-injection via the `RHEVm`_ dashboard "Custom Properties".
-
-The format of the "Custom Properties" entry must be: ::
-
-    floppyinject=user-data.txt:<base64 encoded data>
-
-For example, to pass a simple bash script:
+User metadata is specified on instance creation, and is accessible via the following URL:
 
 .. code-block:: sh
 
-    $ cat simple_script.bash
-    #!/bin/bash
-    echo "Hello Joe!" >> /tmp/JJV_Joe_out.txt
-
-    $ base64 < simple_script.bash
-    IyEvYmluL2Jhc2gKZWNobyAiSGVsbG8gSm9lISIgPj4gL3RtcC9KSlZfSm9lX291dC50eHQK
+    curl -X GET "http://169.254.169.254/metadata/v1/instance/initialization?version=2022-03-01"    
+    -H "Accept: application/json"    
+    -H "Authorization: Bearer $instance_identity_token"    
+    | jq -r
 
 To pass this example script to ``cloud-init`` running in a  `RHEVm`_ v3.0 VM
 set the "Custom Properties" when creating the RHEMv v3.0 VM to: ::
